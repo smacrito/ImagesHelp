@@ -16,7 +16,7 @@ import java.net.URL;
 
 class Images{
     private static String webSiteURL = "https://www.reddit.com/r/EarthPorn/comments/9t8r5o/massive_sunbeams_the_largest_ive_ever_seen/"; //original source to scrap from-- TODO: Create UI to have an entry field that stores into this variable
-    private static String folderPath = System.getProperty("user.home")+"/Downloads/"; //finds the users local downloads folder TODO: create a UI to store the folder path in this location
+    private static final String folderPath = "C:\\Downloads/"; //finds the users local downloads folder TODO: create a UI to store the folder path in this location
     // private because when you try to use these in an OutPutStream, they must be static... might make problems if we want to change the URL?
     public static void main(String[] args){
         try{
@@ -35,20 +35,20 @@ class Images{
     private static void getImages(String src) throws IOException{
         //String folder = null; //local folder path(not using right now)
         int indexName = src.lastIndexOf("/");// extract image name from src attribute EX: https://www.youtube.com/ <-- will stop at last forward slash and get the index of the last "/"
-        
+        // TODO: 11/13/2018 change indexName variable to be more accurate
         if (indexName == src.length()){
             src = src.substring(1,indexName);
         }
 
         indexName = src.lastIndexOf("/");
-        String name = src.substring(indexName,src.length());
-        System.out.println(name);
+        String name = src;//src.substring(indexName,src.length());
+        //System.out.println(name);
         //must open stream for URL
         URL url = new URL(src);
         InputStream in = url.openStream(); //reads the bytes from our stream (website)
         // The openStream() method returns a java.io.InputStream object, so reading from a URL is as easy as reading from an input stream. (from java documentation https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html)
         OutputStream out = new BufferedOutputStream(new FileOutputStream(folderPath + name)); // bufferedoutputstream allows us to write to the computer without calling the underlying system byte-per-byte
-        
+        //FileOutputStream out  = new FileOutputStream(folderPath+name);
         for(int b; (b = in.read()) != -1;){ // for all pictures, write them to output file
             out.write(b); // writes to folder path
         }
