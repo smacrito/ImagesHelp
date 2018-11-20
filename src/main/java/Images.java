@@ -39,9 +39,15 @@ class Images{
         if (indexName == src.length()){
             src = src.substring(1,indexName);
         }
-
         indexName = src.lastIndexOf("/");
+
         String name = src;//src.substring(indexName,src.length());
+        name = name.replace(":",""); // replace all : with ""
+        name = name.replaceAll("[^a-zA-Z0-9-.]", "");
+        for(int i = 0; i < name.length() - 3; i++){ //replaces all but the last "." for the file extention
+            name = name.replaceFirst(".","");
+        }
+
         //System.out.println(name);
         //must open stream for URL
         URL url = new URL(src);
